@@ -4,7 +4,7 @@ import {Company, JobAbout, JobFooter, JobTabs, ScreenHeaderBtn, Specifics} from 
 import {COLORS, icons, SIZES} from '../../constants';
 import useFetch from '../../hook/useFetch';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const tabs = ['About', 'Qualifications', 'Responsibilities'];
 
@@ -19,9 +19,11 @@ const JobDetails = () => {
     const [refreshing, setRefreshing] = useState(false);
     const [activeTab, setActiveTab] = useState(tabs[0]);
 
-    const onRefresh = () => {
-
-    }
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        refetch();
+        setRefreshing(false);
+    }, [])
 
     const displayTabContent = () => {
         switch (activeTab) {
